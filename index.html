@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      #root {
+        background-color: red;
+        display: grid;
+        grid-template-columns: 1fr 40%;
+        width: 768px;
+        height: 512px;
+      }
+
+      #board {
+        position: relative;
+        background-color: #000;
+      }
+
+      #data {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+        overflow-y: auto;
+      }
+
+      .circle {
+        width: 8px;
+        height: 8px;
+        position: absolute;
+        border-radius: 50%;
+        background-color: #fff;
+        opacity: 1;
+        transition: opacity 1s linear;
+      }
+
+      .info {
+        position: absolute;
+        color: white;
+        font-size: 12px;
+      }
+
+      .square {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: 2px solid #fff;
+        transition: opacity 1s linear;
+      }
+
+      .line {
+        stroke: white;
+        stroke-width: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div id="board">
+        <!-- The SVG element for drawing lines -->
+        <svg
+          id="lineCanvas"
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
+        ></svg>
+      </div>
+      <div id="data"></div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
