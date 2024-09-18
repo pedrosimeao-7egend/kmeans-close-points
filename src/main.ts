@@ -1,4 +1,5 @@
 import { kmeans } from "ml-kmeans";
+import { h337 } from "./lib/heatmap";
 
 // Interfaces for types
 interface Circle {
@@ -22,11 +23,16 @@ let lastClickTime: number = 0;
 let circleID: number = 0;
 const circlesData: Circle[] = [];
 let squares: Square[] = [];
-const minDistance = 200;
+const minDistance = 90;
 
 const board = document.getElementById("board") as HTMLDivElement;
 const dataElement = document.getElementById("data") as HTMLDivElement;
 const svgCanvas = document.getElementById("lineCanvas") as any;
+const heatmapContainer = document.getElementById("heatmap") as HTMLDivElement;
+
+var heatmap = h337().create({
+  container: heatmapContainer,
+});
 
 // Utility functions
 const updateDataElement = (data: Circle[]): void => {
@@ -199,17 +205,24 @@ const handleClick = (x: number, y: number): void => {
   const circleToRemove = existingCircle || circlesData[circlesData.length - 1];
   circleToRemove.timeout = setTimeout(() => removeCircle(circleToRemove), 1000);
 
+  // remove heatmap data after 1 second, to avoid heatmap data accumulation
+  setTimeout(() => {
+    heatmap.removeData({ x, y });
+  }, 1000);
+
   removeExpiredSquares();
 
-  if (circlesData.length === 1) {
-    createSquare(x, y);
-  }
+  // if (circlesData.length === 1) {
+  //   // createSquare(x, y);
+  // }
 
-  if (circlesData.length > 1) {
-    addSquareBetweenClosestInCluster(circlesData);
-  }
+  // if (circlesData.length > 1) {
+  //   addSquareBetweenClosestInCluster(circlesData);
+  // }
 
-  handleClustering(circlesData);
+  // handleClustering(circlesData);
+
+  heatmap.addData({ x, y, value: 1 });
 };
 
 // Event listener

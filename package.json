@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@vitejs/plugin-legacy": "^5.4.2",
     "ml-kmeans": "^6.0.0",
     "typescript": "^5.5.4",
     "vite": "^5.4.3"
