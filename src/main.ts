@@ -208,7 +208,7 @@ const handleClick = (x: number, y: number): void => {
   // remove heatmap data after 1 second, to avoid heatmap data accumulation
   setTimeout(() => {
     heatmap.removeData({ x, y });
-  }, 1000);
+  }, 5000);
 
   removeExpiredSquares();
 
@@ -222,7 +222,7 @@ const handleClick = (x: number, y: number): void => {
 
   // handleClustering(circlesData);
 
-  heatmap.addData({ x, y, value: 1 });
+  heatmap.addData({ x, y, value: 200 });
 };
 
 // Event listener
