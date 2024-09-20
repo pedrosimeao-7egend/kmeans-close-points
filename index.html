@@ -11,6 +11,7 @@
         margin: 0;
         height: 100%;
         overflow: hidden;
+        cursor: none;
       }
 
       * {
@@ -18,23 +19,17 @@
       }
 
       #root {
-        background-color: red;
-        display: grid;
-        grid-template-columns: 1fr 40%;
         width: 768px;
         height: 512px;
+        position: relative;
+        display: flex;
       }
 
       #board {
         position: relative;
         background-color: #000;
-      }
-
-      #data {
-        background-color: #333;
-        color: white;
-        padding: 10px;
-        overflow-y: auto;
+        width: 100%;
+        height: 100%;
       }
 
       .circle {
@@ -45,6 +40,11 @@
         background-color: #fff;
         opacity: 1;
         transition: opacity 1s linear;
+      }
+
+      .circle img {
+        position: absolute;
+        z-index: 1;
       }
 
       .info {
@@ -69,6 +69,7 @@
     </style>
   </head>
   <body>
+    <!-- <button id="btn-random-clicks">add random movements</button> -->
     <div id="root">
       <div id="board">
         <!-- The SVG element for drawing lines -->
@@ -83,7 +84,6 @@
           style="position: absolute; top: 0; left: 0; width: 100%; height: 100%"
         ></div>
       </div>
-      <div id="data"></div>
     </div>
     <script type="module" src="/src/main.ts"></script>
   </body>

@@ -23,21 +23,22 @@ let lastClickTime: number = 0;
 let circleID: number = 0;
 const circlesData: Circle[] = [];
 let squares: Square[] = [];
-const minDistance = 90;
+const minDistance = 200;
 
 const board = document.getElementById("board") as HTMLDivElement;
-const dataElement = document.getElementById("data") as HTMLDivElement;
+// const dataElement = document.getElementById("data") as HTMLDivElement;
 const svgCanvas = document.getElementById("lineCanvas") as any;
 const heatmapContainer = document.getElementById("heatmap") as HTMLDivElement;
 
 var heatmap = h337().create({
   container: heatmapContainer,
+  radius: 90
 });
 
 // Utility functions
-const updateDataElement = (data: Circle[]): void => {
-  dataElement.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
-};
+// const updateDataElement = (data: Circle[]): void => {
+//   dataElement.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+// };
 
 const getDistance = (x1: number, y1: number, x2: number, y2: number): number =>
   Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
@@ -66,6 +67,14 @@ const createSquareElement = (x: number, y: number): HTMLDivElement => {
   square.style.left = `${x - 25}px`; // Center the square
   square.style.top = `${y - 25}px`;
   return square;
+
+  // const img = document.createElement("img");
+  // img.src = "/assets/padlab_heat2.svg";
+  // img.alt = "padlab heat";
+  // img.style.left = `${x - 25}px`; // Center the square
+  // img.style.top = `${y - 25}px`;
+
+  // return img
 };
 
 const createCircleElement = (
@@ -85,8 +94,8 @@ const createCircleElement = (
   info.style.top = `${y}px`;
   info.textContent = `ID: ${id}, Clicks: 1, Time: ${timeBetweenClicks}ms`;
 
-  board.appendChild(circle);
-  board.appendChild(info);
+  // board.appendChild(circle);
+  // board.appendChild(info);
 
   return { x, y, id, clickCount: 1, element: circle, infoElement: info };
 };
@@ -102,7 +111,7 @@ const removeCircle = (circle: Circle): void => {
     const index = circlesData.indexOf(circle);
     if (index > -1) {
       circlesData.splice(index, 1);
-      updateDataElement(circlesData);
+      // updateDataElement(circlesData);
     }
   }, 1000);
 };
@@ -199,7 +208,7 @@ const handleClick = (x: number, y: number): void => {
     circleID++;
     const newCircle = createCircleElement(x, y, circleID, timeBetweenClicks);
     circlesData.push(newCircle);
-    updateDataElement(circlesData);
+    // updateDataElement(circlesData);
   }
 
   const circleToRemove = existingCircle || circlesData[circlesData.length - 1];
@@ -208,12 +217,12 @@ const handleClick = (x: number, y: number): void => {
   // remove heatmap data after 1 second, to avoid heatmap data accumulation
   setTimeout(() => {
     heatmap.removeData({ x, y });
-  }, 5000);
+  }, 7000);
 
-  removeExpiredSquares();
+  // removeExpiredSquares();
 
   // if (circlesData.length === 1) {
-  //   // createSquare(x, y);
+  //   createSquare(x, y);
   // }
 
   // if (circlesData.length > 1) {
@@ -222,7 +231,7 @@ const handleClick = (x: number, y: number): void => {
 
   // handleClustering(circlesData);
 
-  heatmap.addData({ x, y, value: 200 });
+  heatmap.addData({ x, y, value: 500 });
 };
 
 // Event listener
@@ -231,3 +240,20 @@ board.addEventListener("click", (event: MouseEvent) => {
   console.log(`Click coordinates: X: ${x}, Y: ${y}`);
   handleClick(x, y);
 });
+
+// create a function (addRandomClicks) that clicks on random coordinates on the board every 1 second
+// and call this function when the button is clicked
+export const addRandomClicks = () => {
+  setInterval(() => {
+    const x = Math.floor(Math.random() * board.offsetWidth);
+    const y = Math.floor(Math.random() * board.offsetHeight);
+    handleClick(x, y);
+  }, 1000);
+};
+
+// const randomClicksButton = document.getElementById("btn-random-clicks") as HTMLButtonElement;
+// randomClicksButton.addEventListener("click", addRandomClicks);
+
+// board.addEventListener("mouseover", (event: MouseEvent) => {
+//   board.style.backgroundColor = "red"
+// })
